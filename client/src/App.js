@@ -5,9 +5,37 @@ import Login from './components/Login'
 
 function App() {
 	return (
-		<div className='max-h-full bg-red-400'>
-			<h1 className='text-3xl font-bold underline'>Hello world!</h1>
-
+		<div className='h-full min-h-screen bg-gray-200'>
+			<h1 className='text-3xl font-bold underline text-sky-400'>
+				Hello world!
+			</h1>
+			<br></br>
+			<br></br>
+			<br></br>
+			<br></br>
+			<br></br>
+			<br></br>
+			<br></br>
+			<br></br>
+			<br></br>
+			<br></br>
+			<br></br>
+			<br></br>
+			<br></br>
+			<br></br>
+			<br></br>
+			<br></br>
+			<br></br>
+			<br></br>
+			<br></br>
+			<br></br>
+			<br></br>
+			<br></br>
+			<br></br>
+			<br></br>
+			<h1 className='text-3xl font-bold underline text-sky-400'>
+				Goodbye world!
+			</h1>
 			<Home />
 			<Dashboard />
 			<About />
