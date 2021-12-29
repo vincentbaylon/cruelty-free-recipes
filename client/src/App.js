@@ -1,45 +1,16 @@
-import Home from './components/Home'
-import Dashboard from './components/Dashboard'
-import About from './components/About'
-import Login from './components/Login'
+import { Navbar, Header, Home, Dashboard, About, Login } from './components'
 
 function App() {
 	return (
-		<div className='h-full min-h-screen bg-gray-200'>
-			<h1 className='text-3xl font-bold underline text-sky-400'>
-				Hello world!
-			</h1>
-			<br></br>
-			<br></br>
-			<br></br>
-			<br></br>
-			<br></br>
-			<br></br>
-			<br></br>
-			<br></br>
-			<br></br>
-			<br></br>
-			<br></br>
-			<br></br>
-			<br></br>
-			<br></br>
-			<br></br>
-			<br></br>
-			<br></br>
-			<br></br>
-			<br></br>
-			<br></br>
-			<br></br>
-			<br></br>
-			<br></br>
-			<br></br>
-			<h1 className='text-3xl font-bold underline text-sky-400'>
-				Goodbye world!
-			</h1>
-			<Home />
-			<Dashboard />
-			<About />
-			<Login />
+		<div className='flex flex-col items-center h-full min-h-screen w-full min-w-screen bg-gray-200'>
+			<div className='max-w-7xl bg-slate-50'>
+				{/* <Navbar /> */}
+				<Header />
+				<Home />
+				<Dashboard />
+				<About />
+				<Login />
+			</div>
 		</div>
 	)
 }
