@@ -10,7 +10,7 @@ function Header() {
 				<Navbar />
 			</div>
 			<div className='bottom-0 right-0 absolute'>
-				<h1 className='p-2 text-white font-medium text-l md:text-3xl font-mono'>
+				<h1 className='p-2 text-white font-medium text-xl font-vujahday md:text-4xl md:pr-5 lg:text-5xl lg:pb-3'>
 					Cruelty Free Recipes
 				</h1>
 			</div>

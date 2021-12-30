@@ -16,6 +16,10 @@ code {
 		monospace;
 }
 
+.font-vujahday {
+	font-family: 'Vujahday Script', cursive;
+}
+
 a {
 	@apply text-white;
 }
