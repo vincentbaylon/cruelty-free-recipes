@@ -1,5 +1,5 @@
 import { Routes, Route } from 'react-router-dom'
-import { Header, Home, Dashboard, About, Login } from './components'
+import { Header, Home, Dashboard, About, Login, Signup } from './components'
 
 function App() {
 	return (
@@ -11,6 +11,7 @@ function App() {
 					<Route exact path='/about' element={<About />} />
 					<Route exact path='/dashboard' element={<Dashboard />} />
 					<Route exact path='/login' element={<Login />} />
+					<Route exact path='/signup' element={<Signup />} />
 					<Route exact path='/' element={<Home />} />
 				</Routes>
 			</div>

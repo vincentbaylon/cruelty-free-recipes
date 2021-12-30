@@ -15,3 +15,10 @@ code {
 	font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
 		monospace;
 }
+
+a {
+	@apply text-white;
+}
+a:hover {
+	@apply text-green-500;
+}

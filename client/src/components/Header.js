@@ -6,7 +6,7 @@ function Header() {
 	return (
 		<div className='top-0 relative'>
 			<img className='' src={pigs} alt='pigs' />
-			<div className='top-0 absolute'>
+			<div className='top-0 absolute w-full'>
 				<Navbar />
 			</div>
 			<div className='bottom-0 right-0 absolute'>
