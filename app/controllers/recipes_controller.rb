@@ -4,7 +4,7 @@ class RecipesController < ApplicationController
   before_action :authorize, except: :get_recipes
 
   def get_recipes
-    url = "https://api.spoonacular.com/recipes/random?number=1&tags=vegan&apiKey="
+    url = "https://api.spoonacular.com/recipes/random?number=50&tags=vegan&apiKey="
     response = RestClient.get(url + ENV["API_KEY"])
     render json: response, status: :ok
   end

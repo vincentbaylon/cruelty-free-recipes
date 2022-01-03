@@ -1,5 +1,6 @@
 import { Routes, Route } from 'react-router-dom'
 import { Header, Home, Dashboard, Veganism, Login, Signup } from './components'
+import './App.css'
 
 function App() {
 	return (

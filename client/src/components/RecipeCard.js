@@ -1,10 +1,14 @@
 function RecipeCard({ recipes }) {
 	return (
-		<div>
+		<div className=''>
 			{console.log(recipes)}
-			<img src={recipes.image} alt={recipes.title} />
-			<h1 className='text-md'>{recipes.title}</h1>
-			<p className='text-md'>{recipes.souceName}</p>
+			<img
+				className='rounded-lg object-cover'
+				src={recipes.image}
+				alt={recipes.title}
+			/>
+			<h1 className='text-md font-semibold truncate'>{recipes.title}</h1>
+			<p className='text-sm'>{recipes.sourceName}</p>
 		</div>
 	)
 }

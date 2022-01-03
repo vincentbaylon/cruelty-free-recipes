@@ -7,7 +7,7 @@ function Home() {
 
 	useEffect(() => {
 		async function fetchRecipes() {
-			let response = await fetch('/recipes')
+			let response = await fetch('')
 			response = await response.json()
 			setRecipes(response)
 		}
@@ -17,7 +17,7 @@ function Home() {
 
 	return (
 		<div>
-			<h1 className='p-5 text-xl font-bold'>Explore Recipes</h1>
+			<h1 className='pl-5 pr-5 pt-5 text-2xl font-bold'>Explore Recipes</h1>
 			<div>
 				<Main recipes={recipes} />
 			</div>
