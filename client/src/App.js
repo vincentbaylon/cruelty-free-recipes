@@ -1,5 +1,5 @@
 import { Routes, Route } from 'react-router-dom'
-import { Header, Home, Dashboard, About, Login, Signup } from './components'
+import { Header, Home, Dashboard, Veganism, Login, Signup } from './components'
 
 function App() {
 	return (
@@ -8,7 +8,7 @@ function App() {
 				<Header />
 
 				<Routes>
-					<Route exact path='/about' element={<About />} />
+					<Route exact path='/veganism' element={<Veganism />} />
 					<Route exact path='/dashboard' element={<Dashboard />} />
 					<Route exact path='/login' element={<Login />} />
 					<Route exact path='/signup' element={<Signup />} />
