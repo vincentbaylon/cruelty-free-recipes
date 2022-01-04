@@ -6,8 +6,7 @@ function Main({ recipes }) {
 	})
 
 	return (
-		<div className='p-5 grid grid-flow-row grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5'>
-			{console.log('MAIN', recipes)}
+		<div className='p-5 grid grow grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5'>
 			{displayRecipes}
 		</div>
 	)

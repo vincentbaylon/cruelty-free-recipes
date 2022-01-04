@@ -29,16 +29,18 @@ function Home() {
 	return (
 		<div>
 			<h1 className='pl-5 pr-5 pt-5 text-2xl font-bold'>Explore Recipes</h1>
-			<div>
+			<div className=''>
 				<Main recipes={recipes} />
 			</div>
 			<div className='flex justify-center'>
-				<button
-					className='m-5 text-lg border-2 border-green-500 h-12 w-36 rounded-full font-semibold hover:bg-green-500 text-black'
-					onClick={fetchMore}
-				>
-					More Recipes
-				</button>
+				{recipes ? (
+					<button
+						className='m-5 text-lg border-2 border-green-500 h-12 w-36 rounded-full font-semibold hover:bg-green-500 text-black'
+						onClick={fetchMore}
+					>
+						More Recipes
+					</button>
+				) : null}
 			</div>
 		</div>
 	)
