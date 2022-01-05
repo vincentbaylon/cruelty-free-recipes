@@ -6,7 +6,7 @@ function Main({ recipes }) {
 	})
 
 	return (
-		<div className='p-5 grid grow grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5'>
+		<div className='p-5 pt-10 grid grow grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5'>
 			{displayRecipes}
 		</div>
 	)

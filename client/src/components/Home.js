@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 
 import Main from './Main'
+import Search from './Search'
 
 function Home() {
 	const [apiFetch, setApiFetch] = useState({})
@@ -27,11 +28,14 @@ function Home() {
 	}
 
 	return (
-		<div>
+		<div className='w-full relative'>
 			<h1 className='pl-5 pr-5 pt-5 text-2xl font-bold'>Explore Recipes</h1>
-			<div className=''>
-				<Main recipes={recipes} />
+			<div className='-top-1 absolute flex justify-end w-full r-0'>
+				<Search />
 			</div>
+
+			<Main recipes={recipes} />
+
 			<div className='flex justify-center'>
 				{recipes ? (
 					<button

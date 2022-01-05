@@ -13,5 +13,4 @@ class RecipesController < ApplicationController
 
     render json: response, status: :ok
   end
-
 end
