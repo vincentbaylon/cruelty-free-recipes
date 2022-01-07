@@ -1,6 +1,6 @@
 function RecipeCard({ recipes }) {
 	return (
-		<div className=''>
+		<div className='hover:shadow-xl hover:bg-green-50 hover:border-2 rounded-lg p-2'>
 			<img
 				className='rounded-lg'
 				src={recipes.recipe.image}
