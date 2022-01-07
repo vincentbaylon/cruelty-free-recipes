@@ -1,6 +1,6 @@
 import Navbar from './Navbar'
 
-import pigs from '../assets/pigs-header-image.jpg'
+import pigs from '../assets/pigs2-header-image.jpeg'
 
 function Header() {
 	return (
@@ -9,7 +9,7 @@ function Header() {
 			<div className='top-0 absolute w-full'>
 				<Navbar />
 			</div>
-			<div className='bottom-0 right-0 absolute'>
+			<div className='bottom-0 left-0 absolute'>
 				<h1 className='p-2 text-white font-medium text-xl font-vujahday md:text-4xl md:pr-5 lg:text-5xl lg:pb-3'>
 					Cruelty Free Recipes
 				</h1>

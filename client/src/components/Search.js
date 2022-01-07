@@ -69,6 +69,10 @@ function Search() {
 			)
 		})
 
+	const handleSearch = () => {
+		setToggleSearch(false)
+	}
+
 	return (
 		<div className='p-5 r-0'>
 			{toggleSearch ? (
@@ -80,7 +84,7 @@ function Search() {
 					</div>
 					<div className='py-2'>
 						<input
-							className='p-1 rounded-lg'
+							className='p-1 rounded-lg capitalize'
 							type='text'
 							placeholder='Search recipes'
 						/>
@@ -107,12 +111,12 @@ function Search() {
 							<p>Health:</p>
 							{displayCategories(healthCategories)}
 
-							<div className='py-3'>
+							{/* <div className='py-3'>
 								<hr></hr>
 							</div>
 
 							<p>Diet:</p>
-							{displayCategories(dietCategories)}
+							{displayCategories(dietCategories)} */}
 
 							{/* <div className='py-3'>
 								<hr></hr>
@@ -120,6 +124,14 @@ function Search() {
 
 							<p>Dish:</p>
 							{displayCategories(dishCategories)} */}
+						</div>
+						<div className='py-3 flex justify-center'>
+							<button
+								className=' bg-white text-black font-semibold text-lg rounded-lg h-9 w-full hover:bg-red-400 hover:text-white'
+								onClick={handleSearch}
+							>
+								Search
+							</button>
 						</div>
 					</div>
 				</div>

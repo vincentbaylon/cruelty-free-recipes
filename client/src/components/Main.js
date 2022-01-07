@@ -2,7 +2,7 @@ import RecipeCard from './RecipeCard'
 
 function Main({ recipes }) {
 	const displayRecipes = recipes?.map((r) => {
-		return <RecipeCard key={r.id} recipes={r} />
+		return <RecipeCard key={r.recipe.label} recipes={r} />
 	})
 
 	return (

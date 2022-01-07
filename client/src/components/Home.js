@@ -4,24 +4,45 @@ import Main from './Main'
 import Search from './Search'
 
 function Home() {
-	const [apiFetch, setApiFetch] = useState({})
+	const [nextLink, setNextLink] = useState('')
 	const [recipes, setRecipes] = useState([])
+
+	const substring = (response) => {
+		let link = response._links.next.href
+		let start = '_cont'
+		let end = '&health'
+		let startIndex = link.indexOf(start)
+		let endIndex = link.indexOf(end)
+		let cont = link.substring(startIndex, endIndex)
+
+		return cont
+	}
 
 	useEffect(() => {
 		async function fetchRecipes() {
 			let response = await fetch('/recipes')
 			response = await response.json()
 			setRecipes(response.hits)
-			setApiFetch(response)
+
+			setNextLink(substring(response))
 		}
 
 		fetchRecipes()
 	}, [])
 
 	const fetchMore = async () => {
-		let response = await fetch(apiFetch._links.next.href)
+		let response = await fetch(`/more_recipes/`, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({
+				nextLink: nextLink,
+			}),
+		})
 		response = await response.json()
-		setApiFetch(response)
+
+		setNextLink(substring(response))
 
 		let newRecipes = [...recipes, ...response.hits]
 		setRecipes(newRecipes)
