@@ -18,10 +18,10 @@ function MainRecipe({ selectedRecipe }) {
 	})
 
 	return (
-		<div className='max-w-7xl flex flex-col justify-center'>
+		<div className='max-w-5xl flex flex-col justify-center'>
 			<div className='p-3 flex flex-col md:flex-row justify-evenly gap-2 bg-green-500'>
 				<img
-					className='rounded-md right-0 order-first md:order-1'
+					className='rounded-md right-0 order-first md:order-1 object-cover'
 					src={selectedRecipe.image}
 					alt={selectedRecipe.title}
 				/>

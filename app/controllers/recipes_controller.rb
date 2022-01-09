@@ -26,31 +26,27 @@ class RecipesController < ApplicationController
   end
 
   def search_more
-    id = ENV["APP_ID"]
-    key = ENV["APP_KEY"]
-    nextLink = recipe_params[:nextLink]
+    key = ENV["API_KEY"]
     query = recipe_params[:query]
-    health = recipe_params[:health]
+    intolerance = recipe_params[:intolerance]
     cuisine = recipe_params[:cuisine]
-    meal = recipe_params[:meal]
-    dish = recipe_params[:dish]
-    url = "https://api.edamam.com/api/recipes/v2?q=#{query}&app_key=#{key}#{meal}&#{nextLink}&health=vegan#{health}#{cuisine}&type=public&app_id=#{id}"
+    type = recipe_params[:type]
+
+    url = "https://api.spoonacular.com/recipes/complexSearch?number=100&offset=100&diet=vegan&addRecipeInformation=true&fillIngredients=true&instructionsRequired=true&apiKey=#{key}&query=#{query}&intolerance=#{intolerance}&cuisine=#{cuisine}&type=#{type}"
 
     response = RestClient.get(url)      
     render json: response, status: :ok
   end
 
   def search
-    id = ENV["APP_ID"]
-    key = ENV["APP_KEY"]
+    key = ENV["API_KEY"]
     query = recipe_params[:query]
-    health = recipe_params[:health]
+    intolerance = recipe_params[:intolerance]
     cuisine = recipe_params[:cuisine]
-    meal = recipe_params[:meal]
-    dish = recipe_params[:dish]
-    url = "https://api.edamam.com/api/recipes/v2?type=public&q=#{query}&app_id=#{id}&app_key=#{key}&health=vegan#{health}#{cuisine}#{dish}#{meal}"
+    type = recipe_params[:type]
 
-    puts url
+    url = "https://api.spoonacular.com/recipes/complexSearch?number=100&diet=vegan&addRecipeInformation=true&fillIngredients=true&instructionsRequired=true&apiKey=#{key}&query=#{query}&intolerance=#{intolerance}&cuisine=#{cuisine}&type=#{type}"
+
     response = RestClient.get(url)      
     render json: response, status: :ok
   end
@@ -58,9 +54,7 @@ class RecipesController < ApplicationController
   private
 
   def recipe_params
-    params.permit(:nextLink, :query, :health, :cuisine, :meal, :dish)
+    params.permit(:query, :intolerance, :cuisine, :type)
   end
 end
 
-
-# https://api.edamam.com/api/recipes/v2?type=public&q=#{query}&app_id=#{id}&app_key=#{key}#{health}#{cuisine}#{meal}&health=gluten-free&cuisineType=Asian&mealType=Lunch

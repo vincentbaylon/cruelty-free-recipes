@@ -1,72 +1,69 @@
 import { useState } from 'react'
 import { RiSearchLine, RiCloseLine } from 'react-icons/ri'
 
-function Search({
-	recipes,
-	setRecipes,
-	nextLink,
-	setNextLink,
-	substring,
-	setQueryData,
-	setSearching,
-}) {
+function Search({ recipes, setRecipes, setQueryData, setSearching }) {
 	const [toggleSearch, setToggleSearch] = useState(false)
 	const [query, setQuery] = useState('')
 	const [healthData, setHealthData] = useState([])
 	const [cuisineData, setCuisineData] = useState([])
-	const [mealData, setMealData] = useState([])
 	const [dishData, setDishData] = useState([])
 
 	const healthCategories = [
-		'Gluten-Free',
-		'Keto-Friendly',
-		'No-Oil-Added',
-		'Peanut-Free',
-		'Sesame-Free',
-		'Soy-Free',
-		'Sugar-Conscious',
-		'Tree-Nut-Free',
-		'Wheat-Free',
+		'Gluten',
+		'Grain',
+		'Peanut',
+		'Sesame',
+		'Soy',
+		'Sulfite',
+		'Tree Nut',
+		'Wheat',
 	]
 
 	const cuisineCategories = [
+		'African',
 		'American',
-		'Asian',
 		'British',
+		'Cajun',
 		'Caribbean',
-		'Central Europe',
 		'Chinese',
-		'Eastern Europe',
+		'Eastern European',
+		'European',
 		'French',
+		'German',
+		'Greek',
 		'Indian',
+		'Irish',
+		'Italian',
 		'Japanese',
+		'Jewish',
+		'Korean',
+		'Latin American',
 		'Mediterranean',
 		'Mexican',
 		'Middle Eastern',
 		'Nordic',
-		'South American',
-		'South East Asian',
+		'Southern',
+		'Spanish',
+		'Thai',
+		'Vietnamese',
 	]
 
 	const dishCategories = [
-		'Biscuits and cookies',
-		'Bread',
-		'Cereals',
-		'Condiments and sauces',
-		'Desserts',
-		'Drinks',
-		'Main course',
-		'Pancake',
-		'Preps',
-		'Preserve',
-		'Salads',
-		'Side dish',
-		'Soup',
-		'Starter',
-		'Sweets',
+		'main course',
+		'side dish',
+		'dessert',
+		'appetizer',
+		'salad',
+		'bread',
+		'breakfast',
+		'soup',
+		'beverage',
+		'sauce',
+		'marinade',
+		'fingerfood',
+		'snack',
+		'drink',
 	]
-
-	const mealCategories = ['Breakfast', 'Lunch', 'Dinner', 'Snack', 'Teatime']
 
 	const handleHealth = (e) => {
 		if (e.target.checked) {
@@ -111,7 +108,7 @@ function Search({
 					value={eachCategory}
 					onChange={handleDish}
 				/>
-				<label className='px-1' key={eachCategory}>
+				<label className='px-1 capitalize' key={eachCategory}>
 					{eachCategory}
 				</label>
 			</div>
@@ -143,40 +140,14 @@ function Search({
 		)
 	})
 
-	const handleMeal = (e) => {
-		if (e.target.checked) {
-			setMealData([...mealData, e.target.value])
-		} else {
-			const newData = mealData.filter((h) => h !== e.target.value)
-			setMealData(newData)
-		}
-	}
-
-	const displayMeal = mealCategories.map((eachCategory) => {
-		return (
-			<div key={eachCategory} className=''>
-				<input
-					type='checkbox'
-					name={eachCategory}
-					value={eachCategory}
-					onChange={handleMeal}
-				/>
-				<label className='px-1' key={eachCategory}>
-					{eachCategory}
-				</label>
-			</div>
-		)
-	})
-
 	const handleQuery = (e) => {
 		setQuery(e.target.value)
 	}
 
 	const handleSearch = async () => {
-		let meal = mealData.join('&mealType=')
-		let cuisine = cuisineData.join('&cuisineType=')
-		let health = healthData.join('&healthType=').toLowerCase()
-		let dish = dishData.join('&dishType')
+		let cuisine = cuisineData.join(',')
+		let health = healthData.join(',')
+		let dish = dishData.join(',')
 
 		let response = await fetch(`/search`, {
 			method: 'POST',
@@ -185,27 +156,26 @@ function Search({
 			},
 			body: JSON.stringify({
 				query: query,
-				meal: mealData.length > 0 ? `&mealType=${meal}` : '',
-				cuisine: cuisineData.length > 0 ? `&cuisineType=${cuisine}` : '',
-				health: healthData.length > 0 ? `&health=${health}` : '',
-				dish: dishData.length > 0 ? `&dishType=${dish}` : '',
+				cuisine: cuisine,
+				intolerance: health,
+				type: dish,
 			}),
 		})
 		response = await response.json()
 
-		setRecipes(response.hits)
+		console.log(response)
+		setRecipes(response.results)
 
 		setSearching(true)
-		setNextLink(substring(response))
+
 		setQueryData({
 			query: query,
-			meal: mealData.length > 0 ? `&mealType=${meal}` : '',
-			cuisine: cuisineData.length > 0 ? `&cuisineType=${cuisine}` : '',
-			health: healthData.length > 0 ? `&health=${health}` : '',
-			dish: dishData.length > 0 ? `&dishType=${dish}` : '',
+			cuisine: cuisine,
+			intolerance: health,
+			type: dish,
 		})
 
-		setMealData([])
+		setDishData([])
 		setCuisineData([])
 		setHealthData([])
 		setQuery('')
@@ -235,13 +205,6 @@ function Search({
 						<h1 className='py-2 font-semibold'>Filter</h1>
 
 						<div className='pl-2'>
-							<p>Meal:</p>
-							{displayMeal}
-
-							<div className='py-3'>
-								<hr></hr>
-							</div>
-
 							<p>Cuisine:</p>
 							{displayCuisine}
 
@@ -249,7 +212,7 @@ function Search({
 								<hr></hr>
 							</div>
 
-							<p>Health:</p>
+							<p>Intolerance:</p>
 							{displayHealth}
 
 							{/* <div className='py-3'>

@@ -7,27 +7,14 @@ import Modal from './Modal'
 function Home() {
 	const [selectedRecipe, setSelectedRecipe] = useState({})
 	const [modalOpen, setModalOpen] = useState(false)
-	const [nextLink, setNextLink] = useState('')
 	const [recipes, setRecipes] = useState([])
 	const [searching, setSearching] = useState(false)
 	const [queryData, setQueryData] = useState({
 		query: '',
-		meal: '',
 		cuisine: '',
-		health: '',
-		dish: '',
+		intolerance: '',
+		type: '',
 	})
-
-	const substring = (response) => {
-		let link = response._links.next.href
-		let start = '_cont'
-		let end = '&health'
-		let startIndex = link.indexOf(start)
-		let endIndex = link.indexOf(end)
-		let cont = link.substring(startIndex, endIndex)
-
-		return cont
-	}
 
 	useEffect(() => {
 		async function fetchRecipes() {
@@ -42,11 +29,27 @@ function Home() {
 	}, [])
 
 	const fetchMore = async () => {
-		let response = await fetch(`/more_recipes`)
-		response = await response.json()
+		if (searching) {
+			let response = await fetch(`/search_more`, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify({
+					queryData,
+				}),
+			})
+			response = await response.json()
 
-		let newRecipes = [...recipes, ...response.results]
-		setRecipes(newRecipes)
+			let newRecipes = [...recipes, ...response.results]
+			setRecipes(newRecipes)
+		} else {
+			let response = await fetch(`/more_recipes`)
+			response = await response.json()
+
+			let newRecipes = [...recipes, ...response.results]
+			setRecipes(newRecipes)
+		}
 	}
 
 	const handleClose = () => {
@@ -65,9 +68,6 @@ function Home() {
 					<Search
 						recipes={recipes}
 						setRecipes={setRecipes}
-						nextLink={nextLink}
-						setNextLink={setNextLink}
-						substring={substring}
 						setQueryData={setQueryData}
 						setSearching={setSearching}
 					/>
