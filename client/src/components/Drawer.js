@@ -11,7 +11,7 @@ function Drawer() {
 				<RiCloseLine size={27} onClick={() => setToggleMenu(false)} />
 			) : (
 				<RiMenu3Line
-					size={22}
+					size={25}
 					className='rotate-180'
 					onClick={() => setToggleMenu(true)}
 				/>

@@ -1,10 +1,21 @@
 import { useState } from 'react'
 import { RiSearchLine, RiCloseLine } from 'react-icons/ri'
 
-function Search() {
+function Search({
+	recipes,
+	setRecipes,
+	nextLink,
+	setNextLink,
+	substring,
+	setQueryData,
+	setSearching,
+}) {
 	const [toggleSearch, setToggleSearch] = useState(false)
-
-	const dietCategories = ['High-Protein', 'Low-Carb', 'Low-Fat', 'Low-Sodium']
+	const [query, setQuery] = useState('')
+	const [healthData, setHealthData] = useState([])
+	const [cuisineData, setCuisineData] = useState([])
+	const [mealData, setMealData] = useState([])
+	const [dishData, setDishData] = useState([])
 
 	const healthCategories = [
 		'Gluten-Free',
@@ -38,18 +49,18 @@ function Search() {
 	]
 
 	const dishCategories = [
-		'Biscuits and Cookies',
+		'Biscuits and cookies',
 		'Bread',
 		'Cereals',
-		'Condiments and Sauces',
+		'Condiments and sauces',
 		'Desserts',
 		'Drinks',
-		'Main Course',
+		'Main course',
 		'Pancake',
 		'Preps',
 		'Preserve',
 		'Salads',
-		'Side Dish',
+		'Side dish',
 		'Soup',
 		'Starter',
 		'Sweets',
@@ -57,19 +68,147 @@ function Search() {
 
 	const mealCategories = ['Breakfast', 'Lunch', 'Dinner', 'Snack', 'Teatime']
 
-	const displayCategories = (category) =>
-		category.map((eachCategory) => {
-			return (
-				<div className=''>
-					<input type='checkbox' name={eachCategory} />
-					<label className='px-1' key={eachCategory}>
-						{eachCategory}
-					</label>
-				</div>
-			)
+	const handleHealth = (e) => {
+		if (e.target.checked) {
+			setHealthData([...healthData, e.target.value])
+		} else {
+			const newData = healthData.filter((h) => h !== e.target.value)
+			setHealthData(newData)
+		}
+	}
+
+	const displayHealth = healthCategories.map((eachCategory) => {
+		return (
+			<div key={eachCategory} className=''>
+				<input
+					type='checkbox'
+					name={eachCategory}
+					value={eachCategory}
+					onChange={handleHealth}
+				/>
+				<label className='px-1' key={eachCategory}>
+					{eachCategory}
+				</label>
+			</div>
+		)
+	})
+
+	const handleDish = (e) => {
+		if (e.target.checked) {
+			setDishData([...dishData, e.target.value])
+		} else {
+			const newData = dishData.filter((h) => h !== e.target.value)
+			setDishData(newData)
+		}
+	}
+
+	const displayDish = dishCategories.map((eachCategory) => {
+		return (
+			<div key={eachCategory} className=''>
+				<input
+					type='checkbox'
+					name={eachCategory}
+					value={eachCategory}
+					onChange={handleDish}
+				/>
+				<label className='px-1' key={eachCategory}>
+					{eachCategory}
+				</label>
+			</div>
+		)
+	})
+
+	const handleCuisine = (e) => {
+		if (e.target.checked) {
+			setCuisineData([...cuisineData, e.target.value])
+		} else {
+			const newData = cuisineData.filter((h) => h !== e.target.value)
+			setCuisineData(newData)
+		}
+	}
+
+	const displayCuisine = cuisineCategories.map((eachCategory) => {
+		return (
+			<div key={eachCategory} className=''>
+				<input
+					type='checkbox'
+					name={eachCategory}
+					value={eachCategory}
+					onChange={handleCuisine}
+				/>
+				<label className='px-1' key={eachCategory}>
+					{eachCategory}
+				</label>
+			</div>
+		)
+	})
+
+	const handleMeal = (e) => {
+		if (e.target.checked) {
+			setMealData([...mealData, e.target.value])
+		} else {
+			const newData = mealData.filter((h) => h !== e.target.value)
+			setMealData(newData)
+		}
+	}
+
+	const displayMeal = mealCategories.map((eachCategory) => {
+		return (
+			<div key={eachCategory} className=''>
+				<input
+					type='checkbox'
+					name={eachCategory}
+					value={eachCategory}
+					onChange={handleMeal}
+				/>
+				<label className='px-1' key={eachCategory}>
+					{eachCategory}
+				</label>
+			</div>
+		)
+	})
+
+	const handleQuery = (e) => {
+		setQuery(e.target.value)
+	}
+
+	const handleSearch = async () => {
+		let meal = mealData.join('&mealType=')
+		let cuisine = cuisineData.join('&cuisineType=')
+		let health = healthData.join('&healthType=').toLowerCase()
+		let dish = dishData.join('&dishType')
+
+		let response = await fetch(`/search`, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({
+				query: query,
+				meal: mealData.length > 0 ? `&mealType=${meal}` : '',
+				cuisine: cuisineData.length > 0 ? `&cuisineType=${cuisine}` : '',
+				health: healthData.length > 0 ? `&health=${health}` : '',
+				dish: dishData.length > 0 ? `&dishType=${dish}` : '',
+			}),
+		})
+		response = await response.json()
+
+		setRecipes(response.hits)
+
+		setSearching(true)
+		setNextLink(substring(response))
+		setQueryData({
+			query: query,
+			meal: mealData.length > 0 ? `&mealType=${meal}` : '',
+			cuisine: cuisineData.length > 0 ? `&cuisineType=${cuisine}` : '',
+			health: healthData.length > 0 ? `&health=${health}` : '',
+			dish: dishData.length > 0 ? `&dishType=${dish}` : '',
 		})
 
-	const handleSearch = () => {
+		setMealData([])
+		setCuisineData([])
+		setHealthData([])
+		setQuery('')
 		setToggleSearch(false)
 	}
 
@@ -87,6 +226,8 @@ function Search() {
 							className='p-1 rounded-lg capitalize'
 							type='text'
 							placeholder='Search recipes'
+							value={query}
+							onChange={handleQuery}
 						/>
 					</div>
 
@@ -95,21 +236,21 @@ function Search() {
 
 						<div className='pl-2'>
 							<p>Meal:</p>
-							{displayCategories(mealCategories)}
+							{displayMeal}
 
 							<div className='py-3'>
 								<hr></hr>
 							</div>
 
 							<p>Cuisine:</p>
-							{displayCategories(cuisineCategories)}
+							{displayCuisine}
 
 							<div className='py-3'>
 								<hr></hr>
 							</div>
 
 							<p>Health:</p>
-							{displayCategories(healthCategories)}
+							{displayHealth}
 
 							{/* <div className='py-3'>
 								<hr></hr>
@@ -118,19 +259,19 @@ function Search() {
 							<p>Diet:</p>
 							{displayCategories(dietCategories)} */}
 
-							{/* <div className='py-3'>
+							<div className='py-3'>
 								<hr></hr>
 							</div>
 
 							<p>Dish:</p>
-							{displayCategories(dishCategories)} */}
+							{displayDish}
 						</div>
 						<div className='py-3 flex justify-center'>
 							<button
 								className=' bg-white text-black font-semibold text-lg rounded-lg h-9 w-full hover:bg-red-400 hover:text-white'
 								onClick={handleSearch}
 							>
-								Search
+								Get Recipes
 							</button>
 						</div>
 					</div>
@@ -147,3 +288,5 @@ function Search() {
 }
 
 export default Search
+
+// const dietCategories = ['High-Protein', 'Low-Carb', 'Low-Fat', 'Low-Sodium']

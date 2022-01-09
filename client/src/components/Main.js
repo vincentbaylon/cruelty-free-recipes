@@ -1,8 +1,17 @@
+import { useState } from 'react'
+
 import RecipeCard from './RecipeCard'
 
-function Main({ recipes }) {
+function Main({ recipes, setSelectedRecipe, handleClick }) {
 	const displayRecipes = recipes?.map((r) => {
-		return <RecipeCard key={r.recipe.label} recipes={r} />
+		return (
+			<RecipeCard
+				key={r.recipe.label + r.recipe.source}
+				recipes={r}
+				handleClick={handleClick}
+				setSelectedRecipe={setSelectedRecipe}
+			/>
+		)
 	})
 
 	return (

@@ -7,7 +7,7 @@ function Navbar() {
 
 	return (
 		<>
-			{matches ? (
+			{/* {matches ? (
 				<div className='flex space-x-5 p-2 pl-5 pt-4 text-white w-full font-semibold items-center'>
 					<Link to='/'>Home</Link>
 					<div className='flex-1'>
@@ -22,11 +22,11 @@ function Navbar() {
 						</button>
 					</Link>
 				</div>
-			) : (
-				<div className='flex p-2'>
-					<Drawer />
-				</div>
-			)}
+			) : ( */}
+			<div className='flex p-2'>
+				<Drawer />
+			</div>
+			{/* )} */}
 		</>
 	)
 }
