@@ -33,53 +33,20 @@ function Home() {
 		async function fetchRecipes() {
 			let response = await fetch('/recipes')
 			response = await response.json()
-			setRecipes(response.hits)
 
-			setNextLink(substring(response))
+			setRecipes(response.results)
+			console.log(response.results)
 		}
 
 		fetchRecipes()
 	}, [])
 
 	const fetchMore = async () => {
-		if (searching) {
-			let response = await fetch(`/search_more`, {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-				},
-				body: JSON.stringify({
-					nextLink: nextLink,
-					query: queryData.query,
-					meal: queryData.meal,
-					cuisine: queryData.cuisine,
-					health: queryData.health,
-					dish: queryData.dish,
-				}),
-			})
-			response = await response.json()
+		let response = await fetch(`/more_recipes`)
+		response = await response.json()
 
-			setNextLink(substring(response))
-
-			let newRecipes = [...recipes, ...response.hits]
-			setRecipes(newRecipes)
-		} else {
-			let response = await fetch(`/more_recipes`, {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-				},
-				body: JSON.stringify({
-					nextLink: nextLink,
-				}),
-			})
-			response = await response.json()
-
-			setNextLink(substring(response))
-
-			let newRecipes = [...recipes, ...response.hits]
-			setRecipes(newRecipes)
-		}
+		let newRecipes = [...recipes, ...response.results]
+		setRecipes(newRecipes)
 	}
 
 	const handleClose = () => {

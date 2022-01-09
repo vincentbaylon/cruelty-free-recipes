@@ -6,7 +6,7 @@ function Main({ recipes, setSelectedRecipe, handleClick }) {
 	const displayRecipes = recipes?.map((r) => {
 		return (
 			<RecipeCard
-				key={r.recipe.label + r.recipe.source}
+				key={r.id}
 				recipes={r}
 				handleClick={handleClick}
 				setSelectedRecipe={setSelectedRecipe}

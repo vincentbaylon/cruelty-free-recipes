@@ -31,15 +31,15 @@ a:hover {
 	position: fixed;
 	top: 0;
 	left: 0;
-	height: 100%;
-	width: 100%;
+	bottom: 0;
 	background: #000000e1;
-	display: flex;
 	align-items: center;
 	justify-content: center;
+	overflow-y: scroll;
+	overflow-x: hidden;
 }
 
-.modal {
+/* .modal {
 	margin: auto;
 	padding: 0 2rem;
 	border-radius: 12px;
@@ -47,4 +47,4 @@ a:hover {
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
-}
+} */
