@@ -1,7 +1,13 @@
 import { useState } from 'react'
 import { RiSearchLine, RiCloseLine } from 'react-icons/ri'
 
-function Search({ recipes, setRecipes, setQueryData, setSearching }) {
+function Search({
+	recipes,
+	setRecipes,
+	setQueryData,
+	setSearching,
+	setTotalResults,
+}) {
 	const [toggleSearch, setToggleSearch] = useState(false)
 	const [query, setQuery] = useState('')
 	const [healthData, setHealthData] = useState([])
@@ -163,9 +169,8 @@ function Search({ recipes, setRecipes, setQueryData, setSearching }) {
 		})
 		response = await response.json()
 
-		console.log(response)
 		setRecipes(response.results)
-
+		setTotalResults(response.totalResults)
 		setSearching(true)
 
 		setQueryData({

@@ -8,6 +8,7 @@ function Home() {
 	const [selectedRecipe, setSelectedRecipe] = useState({})
 	const [modalOpen, setModalOpen] = useState(false)
 	const [recipes, setRecipes] = useState([])
+	const [totalResults, setTotalResults] = useState(0)
 	const [searching, setSearching] = useState(false)
 	const [queryData, setQueryData] = useState({
 		query: '',
@@ -22,7 +23,7 @@ function Home() {
 			response = await response.json()
 
 			setRecipes(response.results)
-			console.log(response.results)
+			setTotalResults(response.totalResults)
 		}
 
 		fetchRecipes()
@@ -37,6 +38,7 @@ function Home() {
 				},
 				body: JSON.stringify({
 					queryData,
+					offset: totalResults > recipes.length ? recipes.length : 0,
 				}),
 			})
 			response = await response.json()
@@ -44,7 +46,15 @@ function Home() {
 			let newRecipes = [...recipes, ...response.results]
 			setRecipes(newRecipes)
 		} else {
-			let response = await fetch(`/more_recipes`)
+			let response = await fetch(`/more_recipes`, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify({
+					offset: totalResults > recipes.length ? recipes.length : 0,
+				}),
+			})
 			response = await response.json()
 
 			let newRecipes = [...recipes, ...response.results]
@@ -70,6 +80,7 @@ function Home() {
 						setRecipes={setRecipes}
 						setQueryData={setQueryData}
 						setSearching={setSearching}
+						setTotalResults={setTotalResults}
 					/>
 				</div>
 
@@ -80,7 +91,7 @@ function Home() {
 				/>
 
 				<div className='flex justify-center'>
-					{recipes ? (
+					{totalResults > 100 ? (
 						<button
 							className='m-5 text-lg border-2 border-green-500 h-12 w-36 rounded-full font-semibold hover:bg-green-500 text-black'
 							onClick={fetchMore}
