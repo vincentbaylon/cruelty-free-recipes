@@ -12,8 +12,8 @@ class PasswordsController < ApplicationController
       user.generate_password_token! #generate pass token
       UserMailer.password_reset(user).deliver_now
       render json: {status: 'ok'}, status: :ok
-    else
-      render json: {error: ['Email address not found. Please check and try again.']}, status: :not_found
+    # else
+    #   render json: {error: ['Email address not found. Please check and try again.']}, status: :not_found
     end
   end
 
@@ -33,7 +33,7 @@ class PasswordsController < ApplicationController
         render json: {error: user.errors.full_messages}, status: :unprocessable_entity
       end
     else
-      render json: {error:  ['Link not valid or expired. Try generating a new link.']}, status: :not_found
+      render json: {error: ['Link not valid or expired. Try generating a new link.']}, status: :not_found
     end
   end
 end

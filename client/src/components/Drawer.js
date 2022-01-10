@@ -22,14 +22,14 @@ function Drawer() {
 
 					<Link to='/veganism'>Veganism</Link>
 
-					{/* <hr></hr>
+					<hr></hr>
 
 					<Link className='' to='/login'>
 						Login
 					</Link>
 					<Link className='' to='/signup'>
 						Sign up
-					</Link> */}
+					</Link>
 				</div>
 			) : null}
 		</div>
