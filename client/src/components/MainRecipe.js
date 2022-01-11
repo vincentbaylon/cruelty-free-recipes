@@ -1,12 +1,14 @@
 function MainRecipe({ selectedRecipe }) {
-	const displaySteps = selectedRecipe.analyzedInstructions[0].steps.map((s) => {
-		return (
-			<div key={s.number + s.step}>
-				<li className='text-sm'>{s.step}</li>
-				<br></br>
-			</div>
-		)
-	})
+	const displaySteps = selectedRecipe.analyzedInstructions[0].steps?.map(
+		(s) => {
+			return (
+				<div key={s.number + s.step}>
+					<li className='text-sm'>{s.step}</li>
+					<br></br>
+				</div>
+			)
+		}
+	)
 
 	const displayIngredients = selectedRecipe.extendedIngredients.map((i) => {
 		return (
@@ -43,6 +45,41 @@ function MainRecipe({ selectedRecipe }) {
 					<h1 className='text-slate-100 font-semibold'>
 						Servings: {selectedRecipe.servings}
 					</h1>
+					<br></br>
+					<div className='flex flex-row items-stretch justify-start gap-3'>
+						<div className='flex flex-col items-center justify-center'>
+							<h1 className='bg-lime-400 text-sm w-full text-center p-1 font-semibold rounded-t-sm'>
+								Calories
+							</h1>
+							<h1 className='bg-lime-300 text-sm w-full text-center p-2 font-semibold rounded-b-sm'>
+								{Math.round(selectedRecipe.nutrition.nutrients[0].amount)}
+							</h1>
+						</div>
+						<div className='flex flex-col items-center justify-center'>
+							<h1 className='bg-lime-400 text-sm w-full text-center p-1 font-semibold rounded-t-sm'>
+								Protein
+							</h1>
+							<h1 className='bg-lime-300 text-sm w-full text-center p-2 font-semibold rounded-b-sm'>
+								{Math.round(selectedRecipe.nutrition.nutrients[8].amount)}
+							</h1>
+						</div>
+						<div className='flex flex-col items-center justify-center'>
+							<h1 className='bg-lime-400 text-sm w-full text-center p-1 font-semibold rounded-t-sm'>
+								Carbs
+							</h1>
+							<h1 className='bg-lime-300 text-sm w-full text-center p-2 font-semibold rounded-b-sm'>
+								{Math.round(selectedRecipe.nutrition.nutrients[3].amount)}
+							</h1>
+						</div>
+						<div className='flex flex-col items-center justify-center'>
+							<h1 className='bg-lime-400 text-sm w-full text-center p-1 font-semibold rounded-t-sm'>
+								Fat
+							</h1>
+							<h1 className='bg-lime-300 text-sm w-full text-center p-2 font-semibold rounded-b-sm'>
+								{Math.round(selectedRecipe.nutrition.nutrients[1].amount)}
+							</h1>
+						</div>
+					</div>
 				</div>
 			</div>
 			<div className='pt-2 flex-row justify-center grid grid-flow-row grid-cols-1 md:grid-cols-2 gap-5'>

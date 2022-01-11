@@ -6,7 +6,7 @@ class RecipesController < ApplicationController
   def get_recipes
     response = Rails.cache.fetch(:spoonacular_recipes, expires_in: 1.hours) do
       key = ENV["API_KEY"]
-      url = "https://api.spoonacular.com/recipes/complexSearch?number=100&diet=vegan&addRecipeInformation=true&fillIngredients=true&instructionsRequired=true&apiKey=#{key}"
+      url = "https://api.spoonacular.com/recipes/complexSearch?number=100&diet=vegan&addRecipeInformation=true&fillIngredients=true&addRecipeNutrition=true&instructionsRequired=true&apiKey=#{key}"
 
       JSON.parse(RestClient.get(url))      
     end
@@ -18,7 +18,7 @@ class RecipesController < ApplicationController
     response = Rails.cache.fetch(recipe_params[:offset], expires_in: 1.hours) do
       key = ENV["API_KEY"]
       offset = recipe_params[:offset]
-      url = "https://api.spoonacular.com/recipes/complexSearch?number=100&offset=#{offset}&diet=vegan&addRecipeInformation=true&instructionsRequired=true&apiKey=#{key}"
+      url = "https://api.spoonacular.com/recipes/complexSearch?number=100&offset=#{offset}&diet=vegan&addRecipeInformation=true&instructionsRequired=true&fillIngredients=true&addRecipeNutrition=true&apiKey=#{key}"
 
       JSON.parse(RestClient.get(url))
     end
@@ -34,7 +34,7 @@ class RecipesController < ApplicationController
     type = recipe_params[:type]
     offset = recipe_params[:offset]
 
-    url = "https://api.spoonacular.com/recipes/complexSearch?number=100&offset=#{offset}&diet=vegan&addRecipeInformation=true&fillIngredients=true&instructionsRequired=true&apiKey=#{key}&query=#{query}&intolerance=#{intolerance}&cuisine=#{cuisine}&type=#{type}"
+    url = "https://api.spoonacular.com/recipes/complexSearch?number=100&offset=#{offset}&diet=vegan&addRecipeInformation=true&fillIngredients=true&instructionsRequired=true&addRecipeNutrition=true&apiKey=#{key}&query=#{query}&intolerance=#{intolerance}&cuisine=#{cuisine}&type=#{type}"
 
     response = RestClient.get(url)      
     render json: response, status: :ok
@@ -47,7 +47,7 @@ class RecipesController < ApplicationController
     cuisine = recipe_params[:cuisine]
     type = recipe_params[:type]
 
-    url = "https://api.spoonacular.com/recipes/complexSearch?number=100&diet=vegan&addRecipeInformation=true&fillIngredients=true&apiKey=#{key}&query=#{query}&intolerance=#{intolerance}&cuisine=#{cuisine}&type=#{type}"
+    url = "https://api.spoonacular.com/recipes/complexSearch?number=100&diet=vegan&addRecipeInformation=true&fillIngredients=true&instructionsRequired=true&addRecipeNutrition=true&apiKey=#{key}&query=#{query}&intolerance=#{intolerance}&cuisine=#{cuisine}&type=#{type}"
 
     response = RestClient.get(url)      
     render json: response, status: :ok

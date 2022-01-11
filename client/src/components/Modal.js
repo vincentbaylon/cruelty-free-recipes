@@ -8,7 +8,7 @@ function Modal({ handleClose, selectedRecipe }) {
 			{console.log(selectedRecipe)}
 			<Backdrop onClick={handleClose}>
 				<motion.div
-					className='p-2 top-12 absolute rounded-lg bg-white'
+					className='p-2 top-12 absolute rounded-lg bg-white pb-12'
 					initial={{ y: 1000, opacity: 1 }}
 					animate={{ y: 0, opacity: [1, 1] }}
 					transition={{

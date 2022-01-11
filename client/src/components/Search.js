@@ -256,5 +256,3 @@ function Search({
 }
 
 export default Search
-
-// const dietCategories = ['High-Protein', 'Low-Carb', 'Low-Fat', 'Low-Sodium']

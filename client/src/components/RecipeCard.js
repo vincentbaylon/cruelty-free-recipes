@@ -6,7 +6,7 @@ function RecipeCard({ recipes, setSelectedRecipe, handleClick }) {
 
 	return (
 		<div
-			className='hover:shadow-xl hover:bg-green-50 hover:border-2 rounded-lg p-2'
+			className='hover:shadow-xl hover:bg-green-50 hover:border-slate-200 border-2 border-white rounded-lg p-2'
 			onClick={recipeClick}
 		>
 			<img className='rounded-lg' src={recipes.image} alt={recipes.title} />
