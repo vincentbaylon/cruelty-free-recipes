@@ -1,5 +1,13 @@
 import { Routes, Route } from 'react-router-dom'
-import { Header, Home, Dashboard, Veganism, Login, Signup } from './components'
+import {
+	Header,
+	Home,
+	Dashboard,
+	Veganism,
+	Login,
+	Signup,
+	Footer,
+} from './components'
 import './App.css'
 
 function App() {
@@ -16,6 +24,7 @@ function App() {
 					<Route exact path='/' element={<Home />} />
 				</Routes>
 			</div>
+			<Footer />
 		</div>
 	)
 }
