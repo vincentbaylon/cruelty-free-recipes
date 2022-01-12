@@ -214,8 +214,8 @@ function Search({
 						<h1 className='py-2 font-semibold'>Filter</h1>
 
 						<div className='pl-2'>
-							<p>Cuisine:</p>
-							{displayCuisine}
+							<p>Dish:</p>
+							{displayDish}
 
 							<div className='py-3'>
 								<hr></hr>
@@ -235,8 +235,8 @@ function Search({
 								<hr></hr>
 							</div>
 
-							<p>Dish:</p>
-							{displayDish}
+							<p>Cuisine:</p>
+							{displayCuisine}
 						</div>
 						<div className='py-3 flex justify-center'>
 							<button

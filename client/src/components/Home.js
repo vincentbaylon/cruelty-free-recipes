@@ -8,6 +8,7 @@ import Modal from './Modal'
 
 function Home() {
 	const [loading, setLoading] = useState(false)
+	const [moreLoading, setMoreLoading] = useState(false)
 	const [selectedRecipe, setSelectedRecipe] = useState({})
 	const [modalOpen, setModalOpen] = useState(false)
 	const [recipes, setRecipes] = useState([])
@@ -36,6 +37,7 @@ function Home() {
 
 	const fetchMore = async () => {
 		if (searching) {
+			setMoreLoading(true)
 			let response = await fetch(`/search_more`, {
 				method: 'POST',
 				headers: {
@@ -50,7 +52,9 @@ function Home() {
 
 			let newRecipes = [...recipes, ...response.results]
 			setRecipes(newRecipes)
+			setMoreLoading(false)
 		} else {
+			setMoreLoading(true)
 			let response = await fetch(`/more_recipes`, {
 				method: 'POST',
 				headers: {
@@ -64,6 +68,7 @@ function Home() {
 
 			let newRecipes = [...recipes, ...response.results]
 			setRecipes(newRecipes)
+			setMoreLoading(false)
 		}
 	}
 
@@ -100,6 +105,12 @@ function Home() {
 						handleClick={handleClick}
 					/>
 				)}
+
+				{moreLoading ? (
+					<div className='p-10 flex justify-center'>
+						<TailSpin type='TailSpin' color='#aeb6bf' height={80} width={80} />
+					</div>
+				) : null}
 
 				<div className='flex justify-center'>
 					{totalResults > 100 ? (
