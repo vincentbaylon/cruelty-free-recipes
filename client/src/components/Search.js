@@ -153,6 +153,7 @@ function Search({
 
 	const handleSearch = async () => {
 		window.scrollTo(0, 0)
+		setToggleSearch(false)
 		setLoading(true)
 		let cuisine = cuisineData.join(',')
 		let health = healthData.join(',')
@@ -187,7 +188,6 @@ function Search({
 		setCuisineData([])
 		setHealthData([])
 		setQuery('')
-		setToggleSearch(false)
 		setLoading(false)
 	}
 
