@@ -1,5 +1,4 @@
 class PasswordsController < ApplicationController
-  before_action :authorize, except: [:forgot, :reset]
   
   def forgot
     if params[:email].blank? # check if email is present
