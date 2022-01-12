@@ -7,6 +7,7 @@ function Search({
 	setQueryData,
 	setSearching,
 	setTotalResults,
+	setLoading,
 }) {
 	const [toggleSearch, setToggleSearch] = useState(false)
 	const [query, setQuery] = useState('')
@@ -151,6 +152,8 @@ function Search({
 	}
 
 	const handleSearch = async () => {
+		window.scrollTo(0, 0)
+		setLoading(true)
 		let cuisine = cuisineData.join(',')
 		let health = healthData.join(',')
 		let dish = dishData.join(',')
@@ -185,6 +188,7 @@ function Search({
 		setHealthData([])
 		setQuery('')
 		setToggleSearch(false)
+		setLoading(false)
 	}
 
 	return (

@@ -1,10 +1,13 @@
 import { useEffect, useState } from 'react'
+import { TailSpin } from 'react-loader-spinner'
+import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css'
 
 import Main from './Main'
 import Search from './Search'
 import Modal from './Modal'
 
 function Home() {
+	const [loading, setLoading] = useState(false)
 	const [selectedRecipe, setSelectedRecipe] = useState({})
 	const [modalOpen, setModalOpen] = useState(false)
 	const [recipes, setRecipes] = useState([])
@@ -19,11 +22,13 @@ function Home() {
 
 	useEffect(() => {
 		async function fetchRecipes() {
+			setLoading(true)
 			let response = await fetch('/recipes')
 			response = await response.json()
 
 			setRecipes(response.results)
 			setTotalResults(response.totalResults)
+			setLoading(false)
 		}
 
 		fetchRecipes()
@@ -81,14 +86,20 @@ function Home() {
 						setQueryData={setQueryData}
 						setSearching={setSearching}
 						setTotalResults={setTotalResults}
+						setLoading={setLoading}
 					/>
 				</div>
-
-				<Main
-					recipes={recipes}
-					setSelectedRecipe={setSelectedRecipe}
-					handleClick={handleClick}
-				/>
+				{loading ? (
+					<div className='p-10 flex justify-center'>
+						<TailSpin type='TailSpin' color='#aeb6bf' height={80} width={80} />
+					</div>
+				) : (
+					<Main
+						recipes={recipes}
+						setSelectedRecipe={setSelectedRecipe}
+						handleClick={handleClick}
+					/>
+				)}
 
 				<div className='flex justify-center'>
 					{totalResults > 100 ? (
