@@ -1,3 +1,5 @@
+import { RiLeafFill, RiLeafLine } from 'react-icons/ri'
+
 function MainRecipe({ selectedRecipe }) {
 	const displaySteps = selectedRecipe.analyzedInstructions[0].steps?.map(
 		(s) => {
@@ -27,6 +29,7 @@ function MainRecipe({ selectedRecipe }) {
 					src={selectedRecipe.image}
 					alt={selectedRecipe.title}
 				/>
+
 				<div className='flex flex-col'>
 					<h1 className='text-2xl font-bold text-white'>
 						{selectedRecipe.title}
@@ -34,6 +37,15 @@ function MainRecipe({ selectedRecipe }) {
 					<h1 className='text-white font-semibold'>
 						{selectedRecipe.sourceName}
 					</h1>
+					<div className='flex items-center text-lime-900'>
+						<RiLeafFill />
+						<RiLeafFill />
+						<RiLeafLine />
+						<RiLeafLine />
+						<RiLeafLine />
+						<h1>/ 5 reviews</h1>
+					</div>
+
 					<br></br>
 					<h1 className='text-amber-800 font-semibold'>
 						{selectedRecipe.glutenFree ? 'Gluten-Free' : null}
