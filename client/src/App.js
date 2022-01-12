@@ -13,7 +13,7 @@ import './App.css'
 function App() {
 	return (
 		<div className='flex flex-col items-center h-full min-h-screen bg-gray-200'>
-			<div className='max-w-7xl bg-slate-50'>
+			<div className='max-w-7xl bg-white'>
 				<Header />
 
 				<Routes>
