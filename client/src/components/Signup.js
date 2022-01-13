@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import GLogin from './GLogin'
 
-function Signup() {
+function Signup({ setUser }) {
+	const navigate = useNavigate()
 	const [formData, setFormData] = useState({
 		name: '',
 		username: '',
@@ -19,9 +21,20 @@ function Signup() {
 		}
 	}, [password, confirmPassword])
 
+	function capitalizeName(name) {
+		return name.replace(/\b(\w)/g, (s) => s.toUpperCase())
+	}
+
 	const handleChange = (e) => {
 		let name = e.target.name
 		let value = e.target.value
+
+		setFormData({ ...formData, [name]: value })
+	}
+
+	const handleName = (e) => {
+		let name = e.target.name
+		let value = capitalizeName(e.target.value)
 
 		setFormData({ ...formData, [name]: value })
 	}
@@ -32,6 +45,45 @@ function Signup() {
 
 	const handleConfirmPassword = (e) => {
 		setConfirmPassword(e.target.value)
+	}
+
+	const handleSubmit = async () => {
+		if (matches && password !== '') {
+			let response = await fetch(`/users`, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify({
+					name: formData.name,
+					username: formData.username,
+					email: formData.email,
+					password: password,
+				}),
+			})
+			response = await response.json()
+
+			if (response.success) {
+				let loginResponse = await fetch('/login', {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json',
+					},
+					body: JSON.stringify({
+						name: formData.name,
+						username: formData.username,
+						email: formData.email,
+						password: password,
+					}),
+				})
+				loginResponse = await response.json()
+
+				setUser(loginResponse)
+				navigate('/')
+			} else {
+				alert(response.error)
+			}
+		}
 	}
 
 	return (
@@ -57,7 +109,7 @@ function Signup() {
 						type='text'
 						name='name'
 						value={formData.name}
-						onChange={handleChange}
+						onChange={handleName}
 						placeholder='Name'
 					/>
 					<input
@@ -83,7 +135,7 @@ function Signup() {
 						name='password'
 						value={password}
 						onChange={handlePassword}
-						placeholder='Password'
+						placeholder='Password (min 6 chars)'
 					/>
 					<input
 						className='p-2 rounded-sm'
@@ -100,7 +152,10 @@ function Signup() {
 					)}
 				</form>
 				<div className='p-4 flex justify-center'>
-					<button className='bg-green-400 font-semibold w-40 h-10 rounded-md hover:bg-red-400 hover:text-white'>
+					<button
+						className='bg-green-400 font-semibold w-40 h-10 rounded-md hover:bg-red-400 hover:text-white'
+						onClick={handleSubmit}
+					>
 						Sign Up
 					</button>
 				</div>

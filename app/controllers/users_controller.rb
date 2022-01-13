@@ -1,51 +1,35 @@
 class UsersController < ApplicationController
-  before_action :set_user, :authorize, only: [:show, :update, :destroy]
+  before_action :find_user, :authorize, except: [:create, :index]
 
-  # GET /users
   def index
-    @users = User.all
-
-    render json: @users
+    render json: User.all, status: :ok
   end
 
-  # GET /users/1
-  def show
-    render json: @user
-  end
-
-  # POST /users
   def create
-    @user = User.new(user_params)
-
-    if @user.save
-      render json: @user, status: :created, location: @user
-    else
-      render json: @user.errors, status: :unprocessable_entity
-    end
+    render json: User.create!(user_params), status: :created
   end
 
-  # PATCH/PUT /users/1
+  def show
+    render json: @user, status: :ok
+  end
+
   def update
-    if @user.update(user_params)
-      render json: @user
-    else
-      render json: @user.errors, status: :unprocessable_entity
-    end
+    @user.update!(user_params)
+    render json: @user, status: :accepted
   end
 
-  # DELETE /users/1
   def destroy
-    @user.destroy
+    @user.destroy if @user.id == session[:user_id]
+    head :no_content
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_user
-      @user = User.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def user_params
-      params.require(:user).permit(:name, :username, :email, :password_digest)
-    end
+  def find_user
+    @user = User.find(session[:user_id])
+  end
+
+  def user_params
+    params.permit(:name, :username, :password_digest, :password, :email, :id, :user)
+  end
 end

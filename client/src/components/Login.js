@@ -1,13 +1,38 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import GLogin from './GLogin'
 
-function Login() {
+function Login({ setUser }) {
+	const navigate = useNavigate()
 	const [formData, setFormData] = useState({
 		password: '',
 		username: '',
 	})
 
-	const handleChange = () => {}
+	const handleChange = (e) => {
+		let name = e.target.name
+		let value = e.target.value
+
+		setFormData({ ...formData, [name]: value })
+	}
+
+	const handleSubmit = async () => {
+		let response = await fetch('/login', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify(formData),
+		})
+		response = await response.json()
+
+		if (response.error) {
+			alert(response.error)
+		} else {
+			setUser(response)
+			navigate('/')
+		}
+	}
 
 	return (
 		<div className='p-5 flex flex-col items-center pb-10 pt-10'>
@@ -45,7 +70,10 @@ function Login() {
 					/>
 				</form>
 				<div className='p-4 flex justify-center'>
-					<button className='bg-green-400 font-semibold w-40 h-10 rounded-md hover:bg-red-400 hover:text-white'>
+					<button
+						className='bg-green-400 font-semibold w-40 h-10 rounded-md hover:bg-red-400 hover:text-white'
+						onClick={handleSubmit}
+					>
 						Login
 					</button>
 				</div>
