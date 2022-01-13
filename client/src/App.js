@@ -30,10 +30,21 @@ function App() {
 		fetchMe()
 	}, [])
 
+	const handleLogout = () => {
+		fetch('/logout', {
+			method: 'DELETE',
+		}).then(onLogout)
+	}
+
+	const onLogout = () => {
+		setUser({})
+		navigate('/')
+	}
+
 	return (
 		<div className='flex flex-col items-center h-full min-h-screen bg-gray-200'>
 			<div className='max-w-7xl bg-white'>
-				<Header user={user} />
+				<Header user={user} handleLogout={handleLogout} />
 
 				<Routes>
 					<Route exact path='/veganism' element={<Veganism />} />

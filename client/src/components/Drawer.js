@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { RiMenu3Line, RiCloseLine } from 'react-icons/ri'
 
-function Drawer({ user }) {
+function Drawer({ user, handleLogout }) {
 	const [toggleMenu, setToggleMenu] = useState(false)
 
 	return (
@@ -24,6 +24,9 @@ function Drawer({ user }) {
 						<hr></hr>
 
 						<Link to='/dashboard'>{user.username}</Link>
+						<Link to='' onClick={handleLogout}>
+							Sign out
+						</Link>
 					</div>
 				) : (
 					<div className='p-5 flex flex-col gap-2 bg-black font-semibold scale-up-center rounded-lg'>

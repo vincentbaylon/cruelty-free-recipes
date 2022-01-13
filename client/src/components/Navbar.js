@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 
 import Drawer from './Drawer'
 
-function Navbar({ user }) {
+function Navbar({ user, handleLogout }) {
 	const matches = window.matchMedia('(min-width: 768px)').matches
 
 	return (
@@ -24,7 +24,7 @@ function Navbar({ user }) {
 				</div>
 			) : ( */}
 			<div className='flex p-2'>
-				<Drawer user={user} />
+				<Drawer user={user} handleLogout={handleLogout} />
 			</div>
 			{/* )} */}
 		</>
