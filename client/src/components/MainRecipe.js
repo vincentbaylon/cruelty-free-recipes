@@ -1,6 +1,27 @@
+import { useState } from 'react'
 import { RiLeafFill, RiLeafLine } from 'react-icons/ri'
+import LeafIcon from './LeafIcon'
 
 function MainRecipe({ selectedRecipe }) {
+	const [rating, setRating] = useState(0)
+	const [hoverRating, setHoverRating] = useState(0)
+	const [hovering, setHovering] = useState(true)
+
+	const displayLeafs = [1, 2, 3, 4, 5].map((i) => {
+		return (
+			<LeafIcon
+				key={i}
+				idx={i}
+				setHoverRating={setHoverRating}
+				hoverRating={hoverRating}
+				setRating={setRating}
+				rating={rating}
+				hovering={hovering}
+				setHovering={setHovering}
+			/>
+		)
+	})
+
 	const displaySteps = selectedRecipe.analyzedInstructions[0].steps?.map(
 		(s) => {
 			return (
@@ -108,6 +129,7 @@ function MainRecipe({ selectedRecipe }) {
 					{displaySteps}
 				</div>
 			</div>
+			<div className='pt-2 flex flex-row justify-center'>{displayLeafs}</div>
 		</div>
 	)
 }

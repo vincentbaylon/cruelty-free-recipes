@@ -84,6 +84,12 @@ function Home() {
 		<>
 			<div className='w-full relative flex flex-col justify-center'>
 				<h1 className='pl-5 pr-5 pt-5 text-2xl font-bold'>Explore Recipes</h1>
+				<h1 className='pl-5 font-semibold text-sm capitalize'>
+					{queryData.query !== '' ? `${queryData.query} - ` : null}
+					{queryData.cuisine !== '' ? `${queryData.cuisine} - ` : null}
+					{queryData.intolerance !== '' ? `${queryData.intolerance} - ` : null}
+					{queryData.type !== '' ? `${queryData.type}` : null}
+				</h1>
 				<div className='-top-1 absolute flex justify-end w-full r-0'>
 					<Search
 						recipes={recipes}

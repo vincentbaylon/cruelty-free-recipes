@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :ranks
   resources :favorites
   resources :users
   get '/me', to: 'users#show'
