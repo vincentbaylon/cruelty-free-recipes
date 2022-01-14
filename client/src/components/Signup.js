@@ -64,7 +64,9 @@ function Signup({ setUser }) {
 			})
 			response = await response.json()
 
-			if (response.success) {
+			if (response.error) {
+				alert(response.error)
+			} else {
 				let loginResponse = await fetch('/login', {
 					method: 'POST',
 					headers: {
@@ -77,15 +79,13 @@ function Signup({ setUser }) {
 						password: password,
 					}),
 				})
-				loginResponse = await response.json()
+				loginResponse = await loginResponse.json()
 
 				setUser(loginResponse)
 
-				if (location.pathname === '/singup') {
+				if (location.pathname === '/signup') {
 					navigate('/')
 				}
-			} else {
-				alert(response.error)
 			}
 		}
 	}

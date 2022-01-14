@@ -22,7 +22,6 @@ function MainRecipe({
 	const [currentRating, setCurrentRating] = useState(0)
 
 	useEffect(() => {
-		console.log(selectedRank)
 		let sum = 0
 		selectedRank.map((r) => {
 			sum = sum + r.rank
@@ -30,7 +29,7 @@ function MainRecipe({
 		sum = sum / selectedRank.length
 
 		setCurrentRating(Math.round(sum))
-	}, [])
+	}, [selectedRank])
 
 	useEffect(() => {
 		setShowLogin(false)
