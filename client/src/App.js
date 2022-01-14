@@ -22,7 +22,6 @@ function App() {
 
 			if (!response.error) {
 				setUser(response)
-
 				navigate('/')
 			}
 		}
@@ -51,7 +50,11 @@ function App() {
 					<Route exact path='/dashboard' element={<Dashboard />} />
 					<Route exact path='/login' element={<Login setUser={setUser} />} />
 					<Route exact path='/signup' element={<Signup setUser={setUser} />} />
-					<Route exact path='/' element={<Home />} />
+					<Route
+						exact
+						path='/'
+						element={<Home user={user} setUser={setUser} />}
+					/>
 				</Routes>
 			</div>
 			<Footer />

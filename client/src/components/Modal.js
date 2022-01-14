@@ -2,7 +2,7 @@ import Backdrop from './Backdrop'
 import MainRecipe from './MainRecipe'
 import { motion } from 'framer-motion'
 
-function Modal({ handleClose, selectedRecipe }) {
+function Modal({ handleClose, selectedRecipe, user, setUser }) {
 	return (
 		<>
 			{console.log(selectedRecipe)}
@@ -18,7 +18,11 @@ function Modal({ handleClose, selectedRecipe }) {
 						repeat: false,
 					}}
 				>
-					<MainRecipe selectedRecipe={selectedRecipe} />
+					<MainRecipe
+						selectedRecipe={selectedRecipe}
+						user={user}
+						setUser={setUser}
+					/>
 				</motion.div>
 			</Backdrop>
 		</>

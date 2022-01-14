@@ -1,8 +1,9 @@
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 import GLogin from './GLogin'
 
 function Login({ setUser }) {
+	const location = useLocation()
 	const navigate = useNavigate()
 	const [formData, setFormData] = useState({
 		password: '',
@@ -30,7 +31,10 @@ function Login({ setUser }) {
 			alert(response.error)
 		} else {
 			setUser(response)
-			navigate('/')
+
+			if (location.pathname === '/login') {
+				navigate('/')
+			}
 		}
 	}
 

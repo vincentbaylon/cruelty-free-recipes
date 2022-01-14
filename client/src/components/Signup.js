@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 import GLogin from './GLogin'
 
 function Signup({ setUser }) {
+	const location = useLocation()
 	const navigate = useNavigate()
 	const [formData, setFormData] = useState({
 		name: '',
@@ -79,7 +80,10 @@ function Signup({ setUser }) {
 				loginResponse = await response.json()
 
 				setUser(loginResponse)
-				navigate('/')
+
+				if (location.pathname === '/singup') {
+					navigate('/')
+				}
 			} else {
 				alert(response.error)
 			}

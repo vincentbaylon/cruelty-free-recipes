@@ -97,3 +97,7 @@
 		transform-origin: 100% 0%;
 	}
 }
+
+html {
+	scroll-behavior: smooth;
+}

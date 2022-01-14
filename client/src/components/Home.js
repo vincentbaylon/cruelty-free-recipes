@@ -6,7 +6,7 @@ import Main from './Main'
 import Search from './Search'
 import Modal from './Modal'
 
-function Home() {
+function Home({ user, setUser }) {
 	const [loading, setLoading] = useState(false)
 	const [moreLoading, setMoreLoading] = useState(false)
 	const [selectedRecipe, setSelectedRecipe] = useState({})
@@ -135,6 +135,8 @@ function Home() {
 					modalOpen={modalOpen}
 					handleClose={handleClose}
 					selectedRecipe={selectedRecipe}
+					user={user}
+					setUser={setUser}
 				/>
 			) : null}
 		</>
