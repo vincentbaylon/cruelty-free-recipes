@@ -3,39 +3,29 @@ class RanksController < ApplicationController
 
   # GET /ranks
   def index
-    @ranks = Rank.all
-
-    render json: @ranks
+    render json: Rank.all, status: :ok
   end
 
   # GET /ranks/1
   def show
-    render json: @rank
+    render json: @rank, status: :ok
   end
 
   # POST /ranks
   def create
-    @rank = Rank.new(rank_params)
-
-    if @rank.save
-      render json: @rank, status: :created, location: @rank
-    else
-      render json: @rank.errors, status: :unprocessable_entity
-    end
+    render json: Rank.create!(rank_params), status: :created
   end
 
   # PATCH/PUT /ranks/1
   def update
-    if @rank.update(rank_params)
-      render json: @rank
-    else
-      render json: @rank.errors, status: :unprocessable_entity
-    end
+    @rank.update!(rank_params)
+    render json: @rank, status: :accepted
   end
 
   # DELETE /ranks/1
   def destroy
     @rank.destroy
+    head :no_content
   end
 
   private
@@ -46,6 +36,6 @@ class RanksController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def rank_params
-      params.require(:rank).permit(:ref_key, :comment, :rank, :user_id)
+      params.permit(:ref_key, :comment, :rank, :user_id, :id)
     end
 end

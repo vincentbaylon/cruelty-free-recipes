@@ -10,8 +10,10 @@ function Home({ user, setUser }) {
 	const [loading, setLoading] = useState(false)
 	const [moreLoading, setMoreLoading] = useState(false)
 	const [selectedRecipe, setSelectedRecipe] = useState({})
+	const [selectedRank, setSelectedRank] = useState([])
 	const [modalOpen, setModalOpen] = useState(false)
 	const [recipes, setRecipes] = useState([])
+	const [ranks, setRanks] = useState([])
 	const [totalResults, setTotalResults] = useState(0)
 	const [searching, setSearching] = useState(false)
 	const [queryData, setQueryData] = useState({
@@ -34,6 +36,16 @@ function Home({ user, setUser }) {
 
 		fetchRecipes()
 	}, [])
+
+	useEffect(() => {
+		async function fetchRanks() {
+			let response = await fetch('/ranks')
+			response = await response.json()
+			setRanks(response)
+		}
+
+		fetchRanks()
+	}, [selectedRank])
 
 	const fetchMore = async () => {
 		if (searching) {
@@ -109,6 +121,10 @@ function Home({ user, setUser }) {
 						recipes={recipes}
 						setSelectedRecipe={setSelectedRecipe}
 						handleClick={handleClick}
+						ranks={ranks}
+						setRanks={setRanks}
+						setSelectedRank={setSelectedRank}
+						selectedRank={selectedRank}
 					/>
 				)}
 
@@ -137,6 +153,8 @@ function Home({ user, setUser }) {
 					selectedRecipe={selectedRecipe}
 					user={user}
 					setUser={setUser}
+					setSelectedRank={setSelectedRank}
+					selectedRank={selectedRank}
 				/>
 			) : null}
 		</>

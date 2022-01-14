@@ -2,14 +2,26 @@ import { useState } from 'react'
 
 import RecipeCard from './RecipeCard'
 
-function Main({ recipes, setSelectedRecipe, handleClick }) {
+function Main({
+	recipes,
+	setSelectedRecipe,
+	handleClick,
+	ranks,
+	setRanks,
+	selectedRank,
+	setSelectedRank,
+}) {
 	const displayRecipes = recipes?.map((r) => {
+		let recipeRank = ranks.filter((rank) => rank.ref_key === r.id)
 		return (
 			<RecipeCard
 				key={r.id}
 				recipes={r}
 				handleClick={handleClick}
 				setSelectedRecipe={setSelectedRecipe}
+				recipeRank={recipeRank}
+				setSelectedRank={setSelectedRank}
+				selectedRank={selectedRank}
 			/>
 		)
 	})

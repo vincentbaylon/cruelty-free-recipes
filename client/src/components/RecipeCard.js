@@ -1,6 +1,14 @@
-function RecipeCard({ recipes, setSelectedRecipe, handleClick }) {
+function RecipeCard({
+	recipes,
+	setSelectedRecipe,
+	handleClick,
+	recipeRank,
+	selectedRank,
+	setSelectedRank,
+}) {
 	const recipeClick = () => {
 		setSelectedRecipe(recipes)
+		setSelectedRank(recipeRank)
 		handleClick()
 	}
 

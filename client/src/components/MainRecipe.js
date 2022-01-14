@@ -1,11 +1,17 @@
 import { useEffect, useState, useRef } from 'react'
-import { RiLeafFill, RiLeafLine } from 'react-icons/ri'
-import { Link } from 'react-router-dom'
 import LeafIcon from './LeafIcon'
+import DisplayLeaf from './DisplayLeaf'
 import Login from './Login'
 import Signup from './Signup'
+import Moment from 'react-moment'
 
-function MainRecipe({ selectedRecipe, user, setUser }) {
+function MainRecipe({
+	selectedRecipe,
+	user,
+	setUser,
+	selectedRank,
+	setSelectedRank,
+}) {
 	const [showLogin, setShowLogin] = useState(false)
 	const [showSignup, setShowSignup] = useState(false)
 	const [rating, setRating] = useState(0)
@@ -13,6 +19,18 @@ function MainRecipe({ selectedRecipe, user, setUser }) {
 	const [hovering, setHovering] = useState(true)
 	const myRef = useRef(null)
 	const [comment, setComment] = useState('')
+	const [currentRating, setCurrentRating] = useState(0)
+
+	useEffect(() => {
+		console.log(selectedRank)
+		let sum = 0
+		selectedRank.map((r) => {
+			sum = sum + r.rank
+		})
+		sum = sum / selectedRank.length
+
+		setCurrentRating(Math.round(sum))
+	}, [])
 
 	useEffect(() => {
 		setShowLogin(false)
@@ -53,6 +71,24 @@ function MainRecipe({ selectedRecipe, user, setUser }) {
 		)
 	})
 
+	const displayRanks = selectedRank
+		.slice(0)
+		.reverse()
+		.map((r) => {
+			return (
+				<div key={r.id} className='p-5 bg-slate-300'>
+					<div className='flex flex-row items-center'>
+						<h1 className='pr-2'>{r.user.username}</h1>
+						<DisplayLeaf rank={r.rank} />
+					</div>
+					<h1 className='text-sm text-slate-600'>
+						<Moment format='MM/DD/YYYY HH:mm'>{r.created_at}</Moment>
+					</h1>
+					<h1>"{r.comment}"</h1>
+				</div>
+			)
+		})
+
 	const displaySteps = selectedRecipe.analyzedInstructions[0].steps?.map(
 		(s) => {
 			return (
@@ -73,6 +109,31 @@ function MainRecipe({ selectedRecipe, user, setUser }) {
 		)
 	})
 
+	const handleSubmit = async () => {
+		let response = await fetch('/ranks', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({
+				ref_key: selectedRecipe.id,
+				comment: comment,
+				rank: rating,
+				user_id: user.id,
+			}),
+		})
+		response = await response.json()
+
+		if (response.error) {
+			alert(response.error)
+		} else {
+			setSelectedRank([...selectedRank, response])
+
+			setComment('')
+			setRating(0)
+		}
+	}
+
 	return (
 		<div className='max-w-5xl flex flex-col justify-center'>
 			<div className='p-3 flex flex-col md:flex-row justify-evenly gap-2 bg-green-500'>
@@ -91,7 +152,16 @@ function MainRecipe({ selectedRecipe, user, setUser }) {
 					</h1>
 					<div className='flex items-center text-lime-900'>
 						<button className='hover:underline text-sm' onClick={executeScroll}>
-							Add rate and comment
+							{selectedRank.length > 0 ? (
+								<>
+									<div className='flex flex-row items-center'>
+										<DisplayLeaf rank={currentRating} />
+										<h1>/{selectedRank.length} ratings</h1>
+									</div>
+								</>
+							) : (
+								'Add rate and comment'
+							)}
 						</button>
 					</div>
 
@@ -199,20 +269,24 @@ function MainRecipe({ selectedRecipe, user, setUser }) {
 					value={comment}
 					rows='3'
 				/>
-				<div className='pt-2 flex justify-start'>
+				<div className='pt-2 flex justify-start pb-5'>
 					{Object.keys(user).length !== 0 ? (
-						<button className='bg-green-500 text-black font-semibold text-md rounded-md w-full md:w-auto md:p-2 hover:bg-red-400 hover:text-white h-8 flex items-center justify-center'>
+						<button
+							className='bg-green-500 text-black font-semibold text-md rounded-md w-full md:w-auto md:p-2 hover:bg-red-400 hover:text-white h-8 flex items-center justify-center'
+							onClick={handleSubmit}
+						>
 							Submit
 						</button>
 					) : (
 						<button
 							disabled
-							className='bg-green-500 text-slate-300 font-semibold text-md rounded-md w-full md:w-auto md:p-2 disabled:bg-slate-400 h-8 flex items-center justify-center'
+							className='text-slate-300 font-semibold text-md rounded-md w-full md:w-auto md:p-2 disabled:bg-slate-400 h-8 flex items-center justify-center'
 						>
 							Submit
 						</button>
 					)}
 				</div>
+				{displayRanks}
 			</div>
 		</div>
 	)
