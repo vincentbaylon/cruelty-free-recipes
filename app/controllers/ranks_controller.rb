@@ -1,5 +1,6 @@
 class RanksController < ApplicationController
   before_action :set_rank, only: [:show, :update, :destroy]
+  before_action :authorize, except: [:index]
 
   # GET /ranks
   def index
