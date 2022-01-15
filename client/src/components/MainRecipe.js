@@ -155,7 +155,10 @@ function MainRecipe({
 								<>
 									<div className='flex flex-row items-center'>
 										<DisplayLeaf rank={currentRating} />
-										<h1>/{selectedRank.length} ratings</h1>
+										<h1>
+											/{selectedRank.length}{' '}
+											{selectedRank.length === 1 ? 'rating' : 'ratings'}
+										</h1>
 									</div>
 								</>
 							) : (
