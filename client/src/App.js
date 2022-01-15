@@ -47,7 +47,17 @@ function App() {
 
 				<Routes>
 					<Route exact path='/veganism' element={<Veganism />} />
-					<Route exact path='/dashboard' element={<Dashboard />} />
+					<Route
+						exact
+						path='/dashboard'
+						element={
+							<Dashboard
+								user={user}
+								setUser={setUser}
+								handleLogout={handleLogout}
+							/>
+						}
+					/>
 					<Route exact path='/login' element={<Login setUser={setUser} />} />
 					<Route exact path='/signup' element={<Signup setUser={setUser} />} />
 					<Route
