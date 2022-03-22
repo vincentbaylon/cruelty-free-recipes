@@ -1,7 +1,3 @@
-<p align="center"><img src="client/src/assets/logo.png" alt="logo" width="500px" margin="auto"></p>
-
-<br />
-
 # Cruelty-Free Recipes
 
 > Cruelty-Free Recipes is a plant-based recipe site.
